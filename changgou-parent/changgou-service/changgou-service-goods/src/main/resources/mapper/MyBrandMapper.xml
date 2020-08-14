@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.changgou.goods.mydao.MyBrandMapper">
+    <select id="findByIdxml" resultType="Brand" parameterType="int" >
+        select * from tb_brand where id = #{id}
+    </select>
+    <select id="findZuHeXinXi" resultType="BrandCategory" parameterType="int">
+        select * from tb_brand bd RIGHT JOIN (select * from tb_category cg  LEFT JOIN tb_category_brand cb ON cb.category_id = cg.id where cb.category_id = 558) cc on bd.id = cc.brand_id
+    </select>
+    <select id="findBySelect" parameterType="java.util.ArrayList" resultType="Brand">
+        select * from tb_brand bd where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="findBySelectByObject" parameterType="java.util.ArrayList" resultType="Brand">
+        select * from tb_brand bd where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </select>
+</mapper>
